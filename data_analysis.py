@@ -8,11 +8,14 @@ import fractions
 import math
 
 def main():
-	print('Welcome to the data analysis calculator')
+	print('*********************************************')
+	print('*  Welcome to the Data Analysis Calculator  *')
+	print('*  Number 9: LCM Under Construction  	    *')
+	print('*********************************************\n')
 
 	command = ''
 	while (command != 'q'):
-		command = input('What are you trying to do? Select option.\n1. Sum\n2. Difference\n3. Multiply\n4. Average\n5. Standard Deviation\n6. Greatest Common Factor\n7. Raise to Power\n8. Is Prime?\n9. Least Common Multiple * Under Construction*\n10. Smallest Number Divisble by 1 to N\n11. Factorial Digit Sum\nq. Quit\nEnter option: ')
+		command = input('What are you trying to do? Select option.\n1. Sum\n2. Difference\n3. Multiply\n4. Average\n5. Standard Deviation\n6. Greatest Common Factor\n7. Raise to Power\n8. Is Prime?\n9. Least Common Multiple * Under Construction*\n10. Smallest Number Divisble by 1 to N\n11. Factorial Digit Sum\n12. Power digit sum\n13. nth Prime\n14. last ten digits of n^n\n15. Largest palindrome product\nq. Quit\nEnter option: ')
 		if command == '1':
 			print('\nSum - this will return the absolute value of the sum of the numbers.')
 			Sum =  0
@@ -151,12 +154,16 @@ def main():
 			num2 = int(input('Enter second number: '))
 			max_poss_LCM = num1 * num2
 
-			LCM = 2
-			for i in range(2, max_poss_LCM):
-				if(num1 % i == 0 and num2 % i == 0):
-					LCM = i
+			if(num1 > num2):
+				starting_multiple = num1
+			else:
+				starting_multiple = num2
+			LCM = 1
 
-			print(LCM)
+			for i in range(starting_multiple, max_poss_LCM):
+				if(i % num1 == 0 and i % num2 == 0):
+					LCM = i
+					print(LCM)
 
 		#Smallest multiple: smallest positive number that is evenly divisible by all numbers 1 to N
 		if command == '10':
@@ -185,6 +192,86 @@ def main():
 			print('Sum of digits in ' + str_num + '! = ' + str(sum_fact))
 
 
+		#Project euler 16: Power digit sum - works 
+		#Find the sum of digits in n^m
+		if command == '12':
+			print('\nPower digit sum. Find sum of digits in n^m')
+			base = int(input('Enter base: '))
+			power = int(input('Enter power: '))
+			answer = 1
+			for i in range (0,power):
+				answer *= base
+
+			print(answer)
+			#sum_answer = 0
+			str_answer = str(answer)
+			sum_answer = 0
+			for i in range(0, len(str_answer)):
+				num_to_add = int(str_answer[i])
+				print(num_to_add)
+				sum_answer += num_to_add
+
+			print('Sum of digits in ' + str(base) + '^' + str(power) + " = " + str(sum_answer))
+
+		#not done
+		#Project euler 7: Nth prime
+		if command == '13':
+			print('\nNth prime. Find the prime number at the nth spot')
+			n = int(input('Enter n: '))
+			nth_prime = 0
+			test = 1
+			while (n > 0):
+				if is_prime(test):
+					nth_prime = test
+					n -= 1
+				test += 1
+			print(nth_prime)
+					
+
+		# done
+		#Project euler 48
+		if command == '14':
+			#find the last ten digitsof the series 1^1 + 2^2 + 3^3 + 4^4 +... + 1000^1000
+			num = int(input('Enter base/power number: '))
+			result = 0
+			while num > 0:
+				result += num**num
+				num -= 1
+			print(result)
+
+		#Project euler 4
+		if command == '15':
+			#largest palindrome product of two 3 digit numbers
+			biggest_palindrome = 0
+
+			for i in range(100, 999):
+				for j in range(100, 999):
+					test = i * j
+					if(is_palindrome(test)):
+						biggest_palindrome = test
+
+			print(biggest_palindrome)
+			return biggest_palindrome
+
+		if command == '16':
+			print('x digit fibonacci number')
+			x = 2
+			while(x <= 10^1000):
+				x += (x-1)
+			print(x)
+
+		#Project euler 30
+		# find the sum of all the numbers that can be written as the sum of fifth powers of their digits
+		if command == '17':
+			print('Digit fifth powers')
+			sum_of_fifth_power_digits = 0
+			
+			print(sum_of_fifth_power_digits)
+
+			
+		#Project euler 
+
+
 
 		if command == 'q':
 			print('Thank you for using the data analysis calculator.')
@@ -200,5 +287,23 @@ def main():
 			#avg = average(test_numbers)
 			#print(avg)
 
+
+def is_prime(num):
+	factor = 2
+	while (factor < num):
+		if num % factor == 0:
+			return False
+		factor += 1
+		return True
+
+def is_palindrome(num):
+	str_num = str(num)
+	for x in range(100, 1000):
+		for y in range(100, 1000):
+			if str_num == str_num[::-1]:
+				print('palindrome')
+				return True
+			else:
+				return False
 
 main()
